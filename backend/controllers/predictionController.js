@@ -56,7 +56,40 @@ const predictStudent = async (req, res) => {
     });
   }
 };
+const getPredictionHistory = async (req, res) => {
+  try {
+    const students = await Student.find().sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      students,
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch history",
+    });
+  }
+};
+const deleteHistory = async (req, res) => {
+  try {
+    await Student.findByIdAndDelete(req.params.id);
+
+    res.json({
+      success: true,
+      message: "Prediction deleted",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Delete failed",
+    });
+  }
+};
 
 module.exports = {
   predictStudent,
+  getPredictionHistory,
+  deleteHistory,
 };

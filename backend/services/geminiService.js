@@ -9,13 +9,15 @@ const model = genAI.getGenerativeModel({
 const generateFeedback = async (student) => {
 
     const prompt = `
-You are an academic mentor.
+You are an expert academic mentor.
 
-Student Details
+Analyze the following student's performance.
+
+Student Details:
 
 Name: ${student.name}
 
-Attendance: ${student.attendance}
+Attendance: ${student.attendance}%
 
 Internal Marks: ${student.internal_marks}
 
@@ -23,12 +25,22 @@ Assignment Marks: ${student.assignment_marks}
 
 Prediction: ${student.prediction}
 
-Give:
+Respond ONLY in the following format:
 
-1. Overall Performance
-2. Strengths
-3. Weaknesses
-4. Study Suggestions
+## Overall Performance
+(2-3 lines)
+
+## Strengths
+- Point 1
+- Point 2
+
+## Areas to Improve
+- Point 1
+- Point 2
+
+## Study Suggestions
+- Point 1
+- Point 2
 
 Keep the response under 120 words.
 `;
