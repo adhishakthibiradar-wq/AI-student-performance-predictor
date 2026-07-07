@@ -32,11 +32,19 @@ const predictStudent = async (req, res) => {
 
     console.log("Student saved");
 
-    const feedback = await generateFeedback(student);
+    try {
+  const feedback = await generateFeedback(student);
 
-    console.log("Gemini feedback:", feedback);
+  console.log("Gemini feedback:", feedback);
 
-    student.ai_feedback = feedback;
+  student.ai_feedback = feedback;
+
+} catch (err) {
+  console.log("Gemini unavailable:", err.message);
+
+  student.ai_feedback =
+    "AI feedback is temporarily unavailable because the Gemini API quota has been reached. Please try again later.";
+}
 
     await student.save();
 
