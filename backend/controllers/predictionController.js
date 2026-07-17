@@ -55,14 +55,23 @@ const predictStudent = async (req, res) => {
       student,
     });
 
-  } catch (error) {
-    console.error(error);
+  }  catch (error) {
+  console.error("========== PREDICTION ERROR ==========");
+  console.error("Message:", error.message);
 
-    res.status(500).json({
-      success: false,
-      message: "Prediction Failed",
-    });
+  if (error.response) {
+    console.error("Status:", error.response.status);
+    console.error("Response:", error.response.data);
   }
+
+  console.error(error.stack);
+
+  res.status(500).json({
+    success: false,
+    message: error.message,
+    details: error.response?.data || null,
+  });
+}
 };
 const getPredictionHistory = async (req, res) => {
   try {
